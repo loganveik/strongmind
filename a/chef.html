@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="chef.css">
+    <script src="https://kit.fontawesome.com/ce4de5e097.js" crossorigin="anonymous"></script>
+    <title>Pizza Shop Chef</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <nav>
+            <p class="nav-logo">pizza.</p>
+            <ul class="nav-links">
+                <a class="nav-link" href="owner.html">
+                    <li>OWNER</li>
+                </a>
+                <a class="nav-link" href="chef.html">
+                    <li>CHEF</li>
+                </a>
+            </ul>
+        </nav>
+
+        <div class="pizzas-card">
+
+            <div class="pizzas-create">
+                <h1 class="pizzas-create-title">Create a Pizza!</h1>
+                <form class="pizzas-create-form">
+                    <input class="pizzas-create-form-input" placeholder='"The Cactus Jack"'>
+
+                    <ul class="pizzas-create-form-toppings">
+                        <li class="pizzas-create-form-topping">
+                            <input class="pizzas-create-form-checkbox" type="checkbox" value="Kiwi">
+                            Kiwi
+                        </li>
+                        <li class="pizzas-create-form-topping">
+                            <input class="pizzas-create-form-checkbox" type="checkbox" value="Banana">
+                            Banana
+                        </li>
+                    </ul>
+
+                    <button class="pizzas-create-form-button" type="submit">Create</button>
+                </form>
+            </div>
+
+            <div class="pizzas-list">
+                <!-- <p class="pizzas-list-warning">No pizzas yet, add some!</p> -->
+                <div class="pizzas-list-item">
+                    <div class="pizzas-list-item-info">
+                        <p class="pizzas-list-item-name">The Fruity Rebel</p>
+                        <div class="pizzas-list-item-toppings">
+                            <p class="pizzas-list-item-topping">Kiwi</p>
+                            <p class="pizzas-list-item-topping">Banana</p>
+                        </div>
+                    </div>
+                    <div class="pizzas-list-item-icons">
+                        <i class="pizzas-list-item-icon fa-solid fa-pen"></i>
+                        <i class="pizzas-list-item-icon fa-solid fa-trash"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

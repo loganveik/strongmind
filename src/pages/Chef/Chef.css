@@ -1,0 +1,143 @@
+.pizzas-card {
+    background-color: #E7E7E7;
+    box-shadow: 0 0 1rem rgb(0 0 0 / 0.4);
+    border-radius: 1rem;
+    padding: 1rem;
+    min-width: 50%;
+    margin-top: 5rem;
+}
+
+.pizzas-create {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pizzas-create-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #485696;
+    text-align: center;
+}
+
+.pizzas-create-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.pizzas-create-form-input {
+    outline: none;
+    border: none;
+    padding: 1rem;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000000;
+    border: 1px solid #485696;
+    margin-bottom: 1rem;
+}
+
+.pizzas-create-form-input::placeholder {
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.pizzas-create-form-toppings {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.pizzas-create-form-topping {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #000000;
+}
+
+/* .pizzas-create-form-checkbox {} */
+
+.pizzas-create-form-button {
+    outline: none;
+    border: none;
+    padding: 1rem;
+    background-color: #485696;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 2rem;
+    width: fit-content;
+}
+
+.pizzas-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #000000;
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.pizzas-list-warning {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.pizzas-list-item {
+    background-color: #485696;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 1rem;
+    border-radius: 0.25rem;
+}
+
+/* .pizzas-list-item-info {} */
+
+.pizzas-list-item-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.pizzas-list-item-toppings {
+    display: flex;
+}
+
+.pizzas-list-item-topping {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #edf2f4;
+    margin-left: 0.25rem;
+}
+
+.pizzas-list-item-icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 3.5rem;
+}
+
+.pizzas-list-item-icon {
+    color: #ffffff;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+
+.pizzas-list-item-icon:hover {
+    color: #E7E7E7;
+}
