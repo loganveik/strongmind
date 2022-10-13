@@ -1,9 +1,15 @@
 import './Owner.css';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../App';
 
 const Owner = () => {
-    const { topping, setTopping, toppingsList, handleSubmit, deleteTopping } = useContext(AppContext);
+
+    const { topping, setTopping, toppingsList, handleToppingSubmit, deleteTopping, toppingWarning, getToppingsList } = useContext(AppContext);
+
+    useEffect(() => {
+        getToppingsList();
+    }, []);
+
     return (
         <div className="toppings-card">
 
@@ -18,26 +24,28 @@ const Owner = () => {
                     <button
                         className="toppings-add-form-button"
                         type="submit"
-                        onClick={handleSubmit}
+                        onClick={handleToppingSubmit}
                     >Add
                      </button>
                 </form>
+                {toppingWarning && <p className="toppings-dupe-warning">{toppingWarning}</p>}
             </div>
 
             <div className="toppings-list">
-                {toppingsList.length === 0
-                    ?
-                    <p className="toppings-list-warning">No toppings yet, add some!</p>
-                    :
-                    toppingsList.map(item => (
-                        <div className="toppings-list-item" key={item.id}>
-                            <p className="toppings-list-item-name">{item.topping}</p>
-                            <div className="toppings-list-item-icons">
-                                <i className="toppings-list-item-icon fa-solid fa-pen"></i>
-                                <i className="toppings-list-item-icon fa-solid fa-trash" onClick={() => deleteTopping(item.id)}></i>
+                {
+                    toppingsList.length === 0
+                        ?
+                        <p className="toppings-list-warning">No toppings yet, add some!</p>
+                        :
+                        toppingsList.map(item => (
+                            <div className="toppings-list-item" key={item.id}>
+                                <p className="toppings-list-item-name">{item.topping}</p>
+                                <div className="toppings-list-item-icons">
+                                    <i className="toppings-list-item-icon fa-solid fa-pen"></i>
+                                    <i className="toppings-list-item-icon fa-solid fa-trash" onClick={() => deleteTopping(item.id)}></i>
+                                </div>
                             </div>
-                        </div>
-                    ))
+                        ))
                 }
             </div>
 

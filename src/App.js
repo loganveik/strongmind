@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Owner from './pages/Owner/Owner';
 import Chef from './pages/Chef/Chef';
@@ -9,41 +9,79 @@ import { collection, onSnapshot, doc, addDoc, deleteDoc } from 'firebase/firesto
 export const AppContext = createContext();
 
 function App() {
-
+  // Toppings State (Owner Page)
   const [topping, setTopping] = useState({ topping: "" });
   const [toppingsList, setToppingsList] = useState([]);
-
+  const [toppingWarning, setToppingWarning] = useState("");
   const toppingsCollectionRef = collection(db, "toppings");
 
-  useEffect(() => {
+  // Pizzas State (Chef Page)
+  const [pizza, setPizza] = useState({
+    name: "",
+    toppings: []
+  });
+  const [pizzasList, setPizzasList] = useState([]);
+  const pizzasCollectionRef = collection(db, "pizzas");
+
+  // --TOPPINGS--
+
+  // get toppings from db
+  const getToppingsList = () => {
     onSnapshot(toppingsCollectionRef, snapshot => {
       setToppingsList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
-  }, []);
+  };
 
-  const handleSubmit = (e) => {
+  // submit topping to db also catch duplicates
+  const handleToppingSubmit = (e) => {
     e.preventDefault();
     const toppingListTopping = toppingsList.map(item => item.topping);
     const enteredTopping = topping.topping;
     const compare = toppingListTopping.filter(item => enteredTopping.includes(item));
-
-    if (enteredTopping === "" || enteredTopping === toppingListTopping) {
+    if (enteredTopping === "") {
       return
+    } else if (compare.length > 0) {
+      setToppingWarning(`"${enteredTopping}" is already a topping`);
     } else {
       addDoc(toppingsCollectionRef, topping);
       setTopping({
         topping: ""
       });
-    }
-    console.log(compare);
+      setToppingWarning("");
+    };
+  };
 
-    // const favPokeIdArr = favoritePokeList.map(item => item.id);
-    // const pokeIdArr = poke.map(item => item.id);
-    // const compare = favPokeIdArr.filter(item => pokeIdArr.includes(item));
-  }
-
+  // delete topping
   const deleteTopping = id => {
     deleteDoc(doc(db, "toppings", id));
+  };
+
+  // --PIZZAS--
+
+  // get pizzas from db
+  const getPizzasList = () => {
+    onSnapshot(pizzasCollectionRef, snapshot => {
+      setPizzasList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    });
+  };
+
+  //submit pizza(name & toppings) to db, catch duplicates
+  const handlePizzaSubmit = (e) => {
+    e.preventDefault();
+    const enteredPizza = pizza.name;
+    if (enteredPizza === "") {
+      return
+    } else {
+      addDoc(pizzasCollectionRef, pizza);
+      setPizza({
+        name: ""
+      });
+    }
+  }
+
+  // delete pizza
+  const deletePizza = id => {
+    deleteDoc(doc(db, "pizzas", id));
   };
 
   return (
@@ -52,9 +90,17 @@ function App() {
       <AppContext.Provider value={{
         topping,
         setTopping,
-        handleSubmit,
+        getToppingsList,
+        handleToppingSubmit,
         toppingsList,
-        deleteTopping
+        deleteTopping,
+        toppingWarning,
+        handlePizzaSubmit,
+        getPizzasList,
+        pizzasList,
+        deletePizza,
+        setPizza,
+        pizza
       }}>
         <Routes>
           <Route exact path="/" element={<Owner />} />
