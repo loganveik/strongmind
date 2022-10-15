@@ -33,18 +33,22 @@
                 <form class="pizzas-create-form">
                     <input class="pizzas-create-form-input" placeholder='"The Cactus Jack"'>
 
-                    <ul class="pizzas-create-form-toppings">
-                        <li class="pizzas-create-form-topping">
-                            <input class="pizzas-create-form-checkbox" type="checkbox" value="Kiwi">
-                            Kiwi
-                        </li>
-                        <li class="pizzas-create-form-topping">
-                            <input class="pizzas-create-form-checkbox" type="checkbox" value="Banana">
-                            Banana
-                        </li>
-                    </ul>
+                    <div class="form-flex">
 
-                    <button class="pizzas-create-form-button" type="submit">Create</button>
+                        <div class="topping-dropdown">
+                            <div class="topping-dropdown-btn">Select a Topping <i
+                                    class="fa-solid fa-caret-down"></i>
+                            </div>
+                            <ul class="topping-dropdown-items">
+                                <li class="topping-dropdown-item" data-val="Pepperoni">Pepperoni</li>
+                                <li class="topping-dropdown-item" data-val="Onion">Onion</li>
+                                <li class="topping-dropdown-item" data-val="Jalapeno">Jalapeno</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="pizzas-create-form-button" type="submit">Create</button>
+                    </div>
+                    <div class="selected-toppings"></div>
                 </form>
             </div>
 
@@ -68,7 +72,7 @@
         </div>
 
     </div>
-
+    <script src="chef.js"></script>
 </body>
 
 </html>

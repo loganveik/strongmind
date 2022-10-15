@@ -24,15 +24,12 @@ function App() {
   const pizzasCollectionRef = collection(db, "pizzas");
 
   // --TOPPINGS--
-
-  // get toppings from db
   const getToppingsList = () => {
     onSnapshot(toppingsCollectionRef, snapshot => {
       setToppingsList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
   };
 
-  // submit topping to db also catch duplicates
   const handleToppingSubmit = (e) => {
     e.preventDefault();
     const toppingListTopping = toppingsList.map(item => item.topping);
@@ -51,21 +48,17 @@ function App() {
     };
   };
 
-  // delete topping
   const deleteTopping = id => {
     deleteDoc(doc(db, "toppings", id));
   };
 
   // --PIZZAS--
-
-  // get pizzas from db
   const getPizzasList = () => {
     onSnapshot(pizzasCollectionRef, snapshot => {
       setPizzasList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
   };
 
-  //submit pizza(name & toppings) to db, catch duplicates
   const handlePizzaSubmit = (e) => {
     e.preventDefault();
     const enteredPizza = pizza.name;
@@ -79,7 +72,16 @@ function App() {
     }
   }
 
-  // delete pizza
+  const handleTopping = (e, i) => {
+    const toppingsClone = [...pizza.toppings];
+    // const toppingsClone = pizza.toppings.map(item => (item));
+    toppingsClone[i] = e.target.value;
+    setPizza({
+      ...pizza,
+      toppings: toppingsClone
+    });
+  };
+
   const deletePizza = id => {
     deleteDoc(doc(db, "pizzas", id));
   };
@@ -100,7 +102,8 @@ function App() {
         pizzasList,
         deletePizza,
         setPizza,
-        pizza
+        pizza,
+        handleTopping
       }}>
         <Routes>
           <Route exact path="/" element={<Owner />} />

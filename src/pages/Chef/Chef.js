@@ -4,7 +4,7 @@ import { AppContext } from '../../App';
 
 const Chef = () => {
 
-    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList } = useContext(AppContext);
+    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList, handleTopping } = useContext(AppContext);
 
     useEffect(() => {
         getPizzasList();
@@ -20,32 +20,45 @@ const Chef = () => {
                     <input
                         className="pizzas-create-form-input"
                         placeholder='"The Cactus Jack"'
-                        onChange={(e) => { setPizza({ name: e.target.value }) }}
+                        onChange={(e) => { setPizza({ ...pizza, name: e.target.value }) }}
                         value={pizza.name}
                     />
 
-                    <ul className="pizzas-create-form-toppings">
-                        {!toppingsList.length
-                            ?
-                            <p className="pizzas-form-toppings-warning">No toppings yet, add some!</p>
-                            :
-                            toppingsList.map(item => (
-                                <li key={item.id} className="pizzas-create-form-topping">
-                                    <input className="pizzas-create-form-checkbox" type="checkbox" value={item.topping} />
-                                    {item.topping}
-                                </li>
-                            ))
-                            // look up how to submit checkbox data/values
-                            // also instead of using toppingsdb and injecting it into pizzasdb, try doing what u did w poke and ...spread topping values directly into pizza state. basically dont do it the way youre doing it rn. try the first thing first tho
-                        }
-                    </ul>
+                    <div className="form-flex">
 
-                    <button
-                        className="pizzas-create-form-button"
-                        type="submit"
-                        onClick={handlePizzaSubmit}
-                    >Create
+                        <div className="topping-dropdown">
+                            <div className="topping-dropdown-btn">Select a Topping <i
+                                className="fa-solid fa-caret-down"></i>
+                            </div>
+                            <ul className="topping-dropdown-items">
+                                {
+                                    toppingsList.map(item => (
+                                        <li
+                                            key={item.id}
+                                            className="topping-dropdown-item"
+                                            data-topping={item.topping}
+                                            onClick={(e) => console.log(e.target.dataset.topping)}
+                                            // onclick, push INTO new state arr
+                                        >
+                                            {item.topping}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+
+                        <button
+                            className="pizzas-create-form-button"
+                            type="submit"
+                            onClick={handlePizzaSubmit}
+                        >Create
                         </button>
+                    </div>
+                    <div className="selected-toppings">
+                        {/* <span className="topping-item">Onion</span> */}
+                        {/* and then here, map over that array and display toppings in a span class (above) */}
+                    </div>
+
                 </form>
             </div>
 
@@ -60,11 +73,11 @@ const Chef = () => {
                                 <div className="pizzas-list-item-info">
                                     <p className="pizzas-list-item-name">{item.name}</p>
                                     <div className="pizzas-list-item-toppings">
-                                        {/* {
+                                        {
                                             item.toppings.map((topping, index) => (
                                                 <p key={index} className="pizzas-list-item-topping">{topping}</p>
                                             ))
-                                        } */}
+                                        }
                                     </div>
                                 </div>
                                 <div className="pizzas-list-item-icons">

@@ -117,19 +117,49 @@ nav {
     font-size: 1rem;
 }
 
-.pizzas-create-form-toppings {
-    width: 100%;
+.form-flex {
+    display: flex;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
-.pizzas-create-form-topping {
+.topping-dropdown {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.topping-dropdown:hover > .topping-dropdown-items{
+    display: block;
+}
+
+.topping-dropdown-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: #ffffff;
+    padding: 1rem;
+    border: 1px solid #000000;
+}
+
+.topping-dropdown-items {
+    position: absolute;
+    display: none;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+
+.topping-dropdown-item {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     font-weight: 300;
-    color: #000000;
+    display: block;
 }
 
-/* .pizzas-create-form-checkbox {} */
+.topping-dropdown-item:hover {
+    background-color: silver;
+}
 
 .pizzas-create-form-button {
     outline: none;
@@ -143,6 +173,23 @@ nav {
     cursor: pointer;
     border-radius: 2rem;
     width: fit-content;
+    margin-left: 1rem;
+}
+
+.selected-toppings {
+    display: flex;
+    flex-direction: column;
+}
+
+.topping-item {
+    background-color: teal;
+    margin-top: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    padding: 0.5rem;
+    text-align: center;
 }
 
 .pizzas-list {
