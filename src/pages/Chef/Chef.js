@@ -4,7 +4,7 @@ import { AppContext } from '../../App';
 
 const Chef = () => {
 
-    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList, handleTopping } = useContext(AppContext);
+    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList, handleTopping, sub } = useContext(AppContext);
 
     useEffect(() => {
         getPizzasList();
@@ -32,13 +32,14 @@ const Chef = () => {
                             </div>
                             <ul className="topping-dropdown-items">
                                 {
-                                    toppingsList.map(item => (
+                                    toppingsList.map((item, i) => (
                                         <li
                                             key={item.id}
                                             className="topping-dropdown-item"
                                             data-topping={item.topping}
-                                            onClick={(e) => console.log(e.target.dataset.topping)}
-                                            // onclick, push INTO new state arr
+                                            // onClick={(e) => handleTopping(e, i)}
+                                            onClick={(e) => sub(e)}
+                                        // onclick, push INTO pizza.toppings [] state arr
                                         >
                                             {item.topping}
                                         </li>
@@ -51,11 +52,16 @@ const Chef = () => {
                             className="pizzas-create-form-button"
                             type="submit"
                             onClick={handlePizzaSubmit}
+                        // sends pizza arr to firebase
                         >Create
                         </button>
                     </div>
                     <div className="selected-toppings">
-                        {/* <span className="topping-item">Onion</span> */}
+                        {
+                            pizza.toppings.map((item, i) => (
+                                <span key={i} className="topping-item">{item}</span>
+                            ))
+                        }
                         {/* and then here, map over that array and display toppings in a span class (above) */}
                     </div>
 

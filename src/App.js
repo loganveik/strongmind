@@ -67,20 +67,31 @@ function App() {
     } else {
       addDoc(pizzasCollectionRef, pizza);
       setPizza({
-        name: ""
+        name: "",
+        toppings: []
       });
     }
+    console.log(pizza);
   }
 
   const handleTopping = (e, i) => {
     const toppingsClone = [...pizza.toppings];
     // const toppingsClone = pizza.toppings.map(item => (item));
-    toppingsClone[i] = e.target.value;
+    // toppingsClone[i] = e.target.value;
+    toppingsClone[i] = e.target.dataset.topping;
     setPizza({
       ...pizza,
       toppings: toppingsClone
     });
   };
+
+  const sub = (e) => {
+
+    setPizza({
+      ...pizza,
+      toppings: [e.target.dataset.topping]
+    });
+  }
 
   const deletePizza = id => {
     deleteDoc(doc(db, "pizzas", id));
@@ -103,7 +114,8 @@ function App() {
         deletePizza,
         setPizza,
         pizza,
-        handleTopping
+        handleTopping,
+        sub
       }}>
         <Routes>
           <Route exact path="/" element={<Owner />} />
