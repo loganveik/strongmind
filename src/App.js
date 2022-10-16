@@ -31,15 +31,36 @@ function App() {
     });
   };
 
+  // const handleToppingSubmit = (e) => {
+  //   e.preventDefault();
+  //   const toppingListTopping = toppingsList.map(item => item.topping);
+  //   const enteredTopping = topping.topping;
+  //   // const compare = enteredTopping.localeCompare(toppingListTopping);
+  //   if (enteredTopping === "") {
+  //     return
+  //   } else if (toppingListTopping === enteredTopping) {
+  //     // setToppingWarning(`"${enteredTopping}" is already a topping`);
+  //     console.log(`${enteredTopping} is already a topping!`);
+  //     // fix this^ kinda buggy
+  //   } else {
+  //     addDoc(toppingsCollectionRef, topping);
+  //     setTopping({
+  //       topping: ""
+  //     });
+  //     setToppingWarning("");
+  //   };
+  //   // console.log(compare);
+  // };
+
   const handleToppingSubmit = (e) => {
     e.preventDefault();
-    const toppingListTopping = toppingsList.map(item => item.topping);
     const enteredTopping = topping.topping;
-    const compare = toppingListTopping.filter(item => enteredTopping.includes(item));
-    if (enteredTopping === "") {
-      return
-    } else if (compare.length > 0) {
-      setToppingWarning(`"${enteredTopping}" is already a topping`);
+    const toppingListTopping = toppingsList.map(item => item.topping);
+    const compare = toppingListTopping.includes(enteredTopping);
+    if (!enteredTopping) {
+      setToppingWarning("You must enter a topping!");
+    } else if (compare === true) {
+      setToppingWarning(`${enteredTopping} is already a topping!`);
     } else {
       addDoc(toppingsCollectionRef, topping);
       setTopping({
@@ -68,6 +89,10 @@ function App() {
       return
     } else if (pizzaToppingsState.length === 0) {
       setPizzaWarning("You must choose at least 1 topping for your pizza!");
+      // You must name your pizza!
+      // this pizza already exists!
+      // pizza with this name already exists!
+      // pizza with these toppings already exist!
     }
     else {
       addDoc(pizzasCollectionRef, pizza);
@@ -121,6 +146,7 @@ function App() {
         setPizza,
         pizza,
         handleTopping,
+        setPizzaWarning,
         pizzaWarning
       }}>
         <Routes>

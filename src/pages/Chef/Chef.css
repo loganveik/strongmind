@@ -88,9 +88,20 @@
     display: block;
 }
 
-.topping-dropdown-item:hover {
+.topping-dropdown-item-warning {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: default;
+    /* display: block; */
+}
+
+
+.topping-dropdown-item:hover,
+.topping-dropdown-item-warning:hover {
     background-color: silver;
 }
+
 
 .pizzas-create-form-button {
     outline: none;
