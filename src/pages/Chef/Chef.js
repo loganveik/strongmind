@@ -4,7 +4,7 @@ import { AppContext } from '../../App';
 
 const Chef = () => {
 
-    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList, handleTopping, sub } = useContext(AppContext);
+    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList, handleTopping } = useContext(AppContext);
 
     useEffect(() => {
         getPizzasList();
@@ -38,7 +38,7 @@ const Chef = () => {
                                             className="topping-dropdown-item"
                                             data-topping={item.topping}
                                             // onClick={(e) => handleTopping(e, i)}
-                                            onClick={(e) => sub(e)}
+                                            onClick={(e) => handleTopping(e)}
                                         // onclick, push INTO pizza.toppings [] state arr
                                         >
                                             {item.topping}
@@ -58,9 +58,13 @@ const Chef = () => {
                     </div>
                     <div className="selected-toppings">
                         {
-                            pizza.toppings.map((item, i) => (
-                                <span key={i} className="topping-item">{item}</span>
-                            ))
+                            pizzaWarning.length > 0
+                                ?
+                                <p>{pizzaWarning}</p>
+                                :
+                                pizza.toppings.map((item, i) => (
+                                    <span key={i} className="topping-item">{item}</span>
+                                ))
                         }
                         {/* and then here, map over that array and display toppings in a span class (above) */}
                     </div>

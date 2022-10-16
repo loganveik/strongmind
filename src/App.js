@@ -21,6 +21,7 @@ function App() {
     toppings: []
   });
   const [pizzasList, setPizzasList] = useState([]);
+  const [pizzaWarning, setPizzaWarning] = useState("");
   const pizzasCollectionRef = collection(db, "pizzas");
 
   // --TOPPINGS--
@@ -62,35 +63,40 @@ function App() {
   const handlePizzaSubmit = (e) => {
     e.preventDefault();
     const enteredPizza = pizza.name;
+    const pizzaToppingsState = pizza.toppings;
     if (enteredPizza === "") {
       return
-    } else {
+    } else if (pizzaToppingsState.length === 0) {
+      setPizzaWarning("You must choose at least 1 topping for your pizza!");
+    }
+    else {
       addDoc(pizzasCollectionRef, pizza);
       setPizza({
         name: "",
         toppings: []
       });
     }
-    console.log(pizza);
+    // console.log(pizza);
   }
 
-  const handleTopping = (e, i) => {
-    const toppingsClone = [...pizza.toppings];
-    // const toppingsClone = pizza.toppings.map(item => (item));
-    // toppingsClone[i] = e.target.value;
-    toppingsClone[i] = e.target.dataset.topping;
-    setPizza({
-      ...pizza,
-      toppings: toppingsClone
-    });
-  };
+  const handleTopping = (e) => {
+    const selectedToppingValue = e.target.dataset.topping;
+    const pizzaToppingsState = pizza.toppings;
+    const newToppingArr = [...pizzaToppingsState, selectedToppingValue];
+    const pizzaToppingsStateMap = pizzaToppingsState.map(item => item);
+    const compare = pizzaToppingsStateMap.filter(item => selectedToppingValue.includes(item));
 
-  const sub = (e) => {
+    if (compare.length > 0) {
+      return
+    } else {
+      setPizza({
+        ...pizza,
+        toppings: newToppingArr
+      });
+    }
 
-    setPizza({
-      ...pizza,
-      toppings: [e.target.dataset.topping]
-    });
+    // const toppingListTopping = toppingsList.map(item => item.topping);
+    // const enteredTopping = topping.topping;
   }
 
   const deletePizza = id => {
@@ -115,7 +121,7 @@ function App() {
         setPizza,
         pizza,
         handleTopping,
-        sub
+        pizzaWarning
       }}>
         <Routes>
           <Route exact path="/" element={<Owner />} />
