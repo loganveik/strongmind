@@ -4,7 +4,7 @@ import { AppContext } from '../../App';
 
 const Chef = () => {
 
-    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, pizzaWarning, getPizzasList, getToppingsList, handleTopping } = useContext(AppContext);
+    const { pizza, setPizza, pizzasList, toppingsList, handlePizzaSubmit, deletePizza, toppingWarning, pizzaWarning, getPizzasList, getToppingsList, handleTopping } = useContext(AppContext);
 
     useEffect(() => {
         getPizzasList();
@@ -32,18 +32,20 @@ const Chef = () => {
                             </div>
                             <ul className="topping-dropdown-items">
                                 {
-                                    toppingsList.map((item, i) => (
-                                        <li
-                                            key={item.id}
-                                            className="topping-dropdown-item"
-                                            data-topping={item.topping}
-                                            // onClick={(e) => handleTopping(e, i)}
-                                            onClick={(e) => handleTopping(e)}
-                                        // onclick, push INTO pizza.toppings [] state arr
-                                        >
-                                            {item.topping}
-                                        </li>
-                                    ))
+                                    toppingWarning.length > 0
+                                        ?
+                                        <p className="topping-dropdown-item">No toppings yet, add some!</p>
+                                        :
+                                        toppingsList.map(item => (
+                                            <li
+                                                key={item.id}
+                                                className="topping-dropdown-item"
+                                                data-topping={item.topping}
+                                                onClick={(e) => handleTopping(e)}
+                                            >
+                                                {item.topping}
+                                            </li>
+                                        ))
                                 }
                             </ul>
                         </div>
@@ -52,7 +54,6 @@ const Chef = () => {
                             className="pizzas-create-form-button"
                             type="submit"
                             onClick={handlePizzaSubmit}
-                        // sends pizza arr to firebase
                         >Create
                         </button>
                     </div>
@@ -66,7 +67,6 @@ const Chef = () => {
                                     <span key={i} className="topping-item">{item}</span>
                                 ))
                         }
-                        {/* and then here, map over that array and display toppings in a span class (above) */}
                     </div>
 
                 </form>
@@ -85,7 +85,7 @@ const Chef = () => {
                                     <div className="pizzas-list-item-toppings">
                                         {
                                             item.toppings.map((topping, index) => (
-                                                <p key={index} className="pizzas-list-item-topping">{topping}</p>
+                                                <p key={index} className="pizzas-list-item-topping">{index > 0 && ', '}{topping}</p>
                                             ))
                                         }
                                     </div>

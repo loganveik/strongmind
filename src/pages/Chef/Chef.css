@@ -171,9 +171,13 @@
     font-size: 1rem;
     font-weight: 300;
     color: #edf2f4;
-    margin-left: 0.25rem;
+    /* margin-left: 0.25rem; */
     font-style: italic;
 }
+
+/* .pizzas-list-item-topping::before {
+    content: '/&nbsp;';
+} */
 
 .pizzas-list-item-icons {
     display: flex;
