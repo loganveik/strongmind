@@ -34,8 +34,8 @@ function App() {
   const handleToppingSubmit = (e) => {
     e.preventDefault();
     const enteredTopping = topping.topping;
-    const toppingListTopping = toppingsList.map(item => item.topping);
-    const compare = toppingListTopping.includes(enteredTopping);
+    const toppingListTopping = toppingsList.map(item => item.topping.toLowerCase());
+    const compare = toppingListTopping.includes(enteredTopping.toLowerCase());
     if (!enteredTopping) {
       setToppingWarning("You must enter a topping!");
     } else if (compare === true) {
@@ -74,8 +74,8 @@ function App() {
   const handlePizzaSubmit = (e) => {
     e.preventDefault();
     const enteredPizza = pizza.name;
-    const pizzaListPizza = pizzasList.map(item => item.name);
-    const compare = pizzaListPizza.includes(enteredPizza);
+    const pizzaListPizza = pizzasList.map(item => item.name.toLowerCase());
+    const compare = pizzaListPizza.includes(enteredPizza.toLowerCase());
     const pizzaToppingsArr = pizza.toppings;
     if (!enteredPizza) {
       setPizzaWarning("You must name your pizza!");
