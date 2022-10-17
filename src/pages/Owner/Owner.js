@@ -1,10 +1,12 @@
 import './Owner.css';
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../App';
+import ToppingAddForm from '../../components/ToppingAddForm/ToppingAddForm';
+import ToppingUpdateForm from '../../components/ToppingUpdateForm/ToppingUpdateForm';
 
 const Owner = () => {
 
-    const { topping, setTopping, toppingsList, handleToppingSubmit, deleteTopping, toppingWarning, getToppingsList } = useContext(AppContext);
+    const { topping, setTopping, toppingsList, handleToppingSubmit, deleteTopping, toppingWarning, getToppingsList, handleUpdateTopping, isToppingUpdating, submitUpdatedTopping } = useContext(AppContext);
 
     useEffect(() => {
         getToppingsList();
@@ -13,7 +15,7 @@ const Owner = () => {
     return (
         <div className="toppings-card">
 
-            <div className="toppings-add">
+            {/* <div className="toppings-add">
                 <h1 className="toppings-add-title">Add a Topping!</h1>
                 <form className="toppings-add-form">
                     <input
@@ -29,7 +31,23 @@ const Owner = () => {
                      </button>
                 </form>
                 {toppingWarning && <p className="toppings-dupe-warning">{toppingWarning}</p>}
-            </div>
+            </div> */}
+            {
+                // isToppingUpdating
+                //     ?
+                //     <ToppingUpdateForm
+                //         onChange={(e) => { setTopping({ topping: e.target.value }) }}
+                //         value={topping.topping}
+                //         onClick={submitUpdatedTopping}
+                //     />
+                //     :
+                    <ToppingAddForm
+                        onChange={(e) => { setTopping({ topping: e.target.value }) }}
+                        value={topping.topping}
+                        onClick={handleToppingSubmit}
+                        toppingWarning={toppingWarning}
+                    />
+            }
 
             <div className="toppings-list">
                 {
@@ -41,7 +59,7 @@ const Owner = () => {
                             <div className="toppings-list-item" key={item.id}>
                                 <p className="toppings-list-item-name">{item.topping}</p>
                                 <div className="toppings-list-item-icons">
-                                    <i className="toppings-list-item-icon fa-solid fa-pen"></i>
+                                    <i className="toppings-list-item-icon fa-solid fa-pen" onClick={() => handleUpdateTopping(item.id, item.topping)}></i>
                                     <i className="toppings-list-item-icon fa-solid fa-trash" onClick={() => deleteTopping(item.id)}></i>
                                 </div>
                             </div>

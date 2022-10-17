@@ -194,3 +194,59 @@ nav {
         font-size: 1rem;
     }
 }
+
+.update-toppings-card {
+    background-color: #E7E7E7;
+    box-shadow: 0 0 1rem rgb(0 0 0 / 0.4);
+    border-radius: 1rem;
+    padding: 1rem;
+    min-width: 50%;
+    margin-top: 5rem;
+}
+
+.toppings-update {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toppings-update-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #485696;
+    text-align: center;
+}
+
+.toppings-update-form {
+    width: 22rem;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.toppings-update-form-input {
+    outline: none;
+    border: none;
+    padding: 1rem;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000000;
+    border: 1px solid #485696;
+}
+
+.toppings-update-form-button {
+    outline: none;
+    border: none;
+    padding: 1rem;
+    border-radius: 2rem;
+    background-color: #485696;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+}

@@ -7,60 +7,6 @@
     margin-top: 5rem;
 }
 
-.toppings-add {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.toppings-add-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #485696;
-    text-align: center;
-}
-
-.toppings-add-form {
-    width: 19rem;
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem 0;
-}
-
-.toppings-add-form-input {
-    outline: none;
-    border: none;
-    padding: 1rem;
-    border-radius: 50px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #000000;
-    border: 1px solid #485696;
-}
-
-.toppings-add-form-button {
-    outline: none;
-    border: none;
-    padding: 1rem;
-    clip-path: circle();
-    background-color: #485696;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #ffffff;
-    cursor: pointer;
-}
-
-.toppings-dupe-warning {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #000000;
-}
-
 .toppings-list {
     width: 100%;
     display: flex;

@@ -4,7 +4,7 @@ import Owner from './pages/Owner/Owner';
 import Chef from './pages/Chef/Chef';
 import Navbar from './components/Navbar/Navbar';
 import { db } from './firebase.config';
-import { collection, onSnapshot, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 export const AppContext = createContext();
 
@@ -13,6 +13,7 @@ function App() {
   const [topping, setTopping] = useState({ topping: "" });
   const [toppingsList, setToppingsList] = useState([]);
   const [toppingWarning, setToppingWarning] = useState("");
+  const [isToppingUpdating, setIsToppingUpdating] = useState(false);
   const toppingsCollectionRef = collection(db, "toppings");
 
   // Pizzas State (Chef Page)
@@ -30,28 +31,6 @@ function App() {
       setToppingsList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
   };
-
-  // const handleToppingSubmit = (e) => {
-  //   e.preventDefault();
-  //   const toppingListTopping = toppingsList.map(item => item.topping);
-  //   const enteredTopping = topping.topping;
-  //   // const compare = enteredTopping.localeCompare(toppingListTopping);
-  //   if (enteredTopping === "") {
-  //     return
-  //   } else if (toppingListTopping === enteredTopping) {
-  //     // setToppingWarning(`"${enteredTopping}" is already a topping`);
-  //     console.log(`${enteredTopping} is already a topping!`);
-  //     // fix this^ kinda buggy
-  //   } else {
-  //     addDoc(toppingsCollectionRef, topping);
-  //     setTopping({
-  //       topping: ""
-  //     });
-  //     setToppingWarning("");
-  //   };
-  //   // console.log(compare);
-  // };
-
   const handleToppingSubmit = (e) => {
     e.preventDefault();
     const enteredTopping = topping.topping;
@@ -69,9 +48,20 @@ function App() {
       setToppingWarning("");
     };
   };
-
   const deleteTopping = id => {
     deleteDoc(doc(db, "toppings", id));
+  };
+  const handleUpdateTopping = (id, topping) => {
+    setIsToppingUpdating(true);
+    setTopping(topping);
+    // console.log(id);
+    // console.log("you are updating this id: " + id);
+    // const gay = toppingsList.map(item => item.id);
+    // const compare = gay.includes(id);
+    // console.log(compare);
+  };
+  const submitUpdatedTopping = () => {
+    setIsToppingUpdating(false);
   };
 
   // --PIZZAS--
@@ -84,24 +74,24 @@ function App() {
   const handlePizzaSubmit = (e) => {
     e.preventDefault();
     const enteredPizza = pizza.name;
-    const pizzaToppingsState = pizza.toppings;
-    if (enteredPizza === "") {
-      return
-    } else if (pizzaToppingsState.length === 0) {
+    const pizzaListPizza = pizzasList.map(item => item.name);
+    const compare = pizzaListPizza.includes(enteredPizza);
+    const pizzaToppingsArr = pizza.toppings;
+    if (!enteredPizza) {
+      setPizzaWarning("You must name your pizza!");
+    } else if (compare === true) {
+      setPizzaWarning(`A pizza with the name ${enteredPizza} already exists!`);
+    } else if (pizzaToppingsArr.length === 0) {
       setPizzaWarning("You must choose at least 1 topping for your pizza!");
-      // You must name your pizza!
-      // this pizza already exists!
-      // pizza with this name already exists!
-      // pizza with these toppings already exist!
-    }
-    else {
+    } else {
       addDoc(pizzasCollectionRef, pizza);
       setPizza({
         name: "",
         toppings: []
       });
+      setPizzaWarning("");
     }
-    // console.log(pizza);
+    // todo: A pizza with these toppings already exists! (compare 2 arrays)
   }
 
   const handleTopping = (e) => {
@@ -110,7 +100,6 @@ function App() {
     const newToppingArr = [...pizzaToppingsState, selectedToppingValue];
     const pizzaToppingsStateMap = pizzaToppingsState.map(item => item);
     const compare = pizzaToppingsStateMap.filter(item => selectedToppingValue.includes(item));
-
     if (compare.length > 0) {
       return
     } else {
@@ -118,11 +107,19 @@ function App() {
         ...pizza,
         toppings: newToppingArr
       });
+      setPizzaWarning("");
     }
-
-    // const toppingListTopping = toppingsList.map(item => item.topping);
-    // const enteredTopping = topping.topping;
   }
+
+  const removeSelectedTopping = (e) => {
+    const selectedToppingValue = e.target.dataset.topping;
+    const pizzaToppingsState = pizza.toppings;
+    const filteredItems = pizzaToppingsState.filter(item => item !== selectedToppingValue);
+    setPizza({
+      ...pizza,
+      toppings: filteredItems
+    });
+  };
 
   const deletePizza = id => {
     deleteDoc(doc(db, "pizzas", id));
@@ -147,7 +144,12 @@ function App() {
         pizza,
         handleTopping,
         setPizzaWarning,
-        pizzaWarning
+        pizzaWarning,
+        handleUpdateTopping,
+        isToppingUpdating,
+        submitUpdatedTopping,
+        Link,
+        removeSelectedTopping
       }}>
         <Routes>
           <Route exact path="/" element={<Owner />} />
