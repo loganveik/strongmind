@@ -1,7 +1,7 @@
 import './ToppingUpdateForm.css';
 import React from 'react';
 
-const ToppingUpdateForm = ({ onChange, value, onClick }) => {
+const ToppingUpdateForm = ({ onChange, value, onClick, toppingWarning }) => {
     return (
         <div className="toppings-update">
             <h1 className="toppings-update-title">Update your Topping!</h1>
@@ -18,6 +18,7 @@ const ToppingUpdateForm = ({ onChange, value, onClick }) => {
                 >Update
                      </button>
             </form>
+            {toppingWarning && <p className="toppings-dupe-warning">{toppingWarning}</p>}
         </div>
     )
 }

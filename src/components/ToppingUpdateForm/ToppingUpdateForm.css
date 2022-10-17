@@ -44,3 +44,10 @@
     color: #ffffff;
     cursor: pointer;
 }
+
+.toppings-dupe-warning {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000000;
+}
