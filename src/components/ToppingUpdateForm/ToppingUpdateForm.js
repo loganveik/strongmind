@@ -10,6 +10,7 @@ const ToppingUpdateForm = ({ onChange, value, onClick, toppingWarning }) => {
                     className="toppings-update-form-input"
                     onChange={onChange}
                     value={value}
+                    placeholder={'"Pepperoni"'}
                 />
                 <button
                     className="toppings-update-form-button"

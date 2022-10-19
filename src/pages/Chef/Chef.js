@@ -13,8 +13,6 @@ const Chef = () => {
         toppingsList,
         handlePizzaSubmit,
         deletePizza,
-        toppingWarning,
-        setPizzaWarning,
         pizzaWarning,
         getPizzasList,
         getToppingsList,
@@ -64,7 +62,7 @@ const Chef = () => {
                         removeSelectedTopping={(e) => removeSelectedTopping(e)}
                     />
             }
-            <div className="pizzas-list">
+            <div className="pizzas-list" data-testid="pizzas-list">
                 {
                     pizzasList.length === 0
                         ?
@@ -77,7 +75,6 @@ const Chef = () => {
                                     <div className="pizzas-list-item-toppings">
                                         {
                                             item.toppings.map((topping, index, arr) => (
-                                                // <p key={index} className="pizzas-list-item-topping">{index > 0 && ', '}{topping}</p>
                                                 <p key={index} className="pizzas-list-item-topping">{topping}{index + 1 === arr.length? '' : ', '}</p>
                                             ))
                                         }

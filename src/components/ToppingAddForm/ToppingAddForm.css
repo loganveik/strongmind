@@ -32,6 +32,11 @@
     border: 1px solid #485696;
 }
 
+.toppings-add-form-input::placeholder {
+    font-weight: 300;
+    font-size: 1rem;
+}
+
 .toppings-add-form-button {
     outline: none;
     border: none;

@@ -32,6 +32,11 @@
     border: 1px solid #485696;
 }
 
+.toppings-update-form-input::placeholder {
+    font-weight: 300;
+    font-size: 1rem;
+}
+
 .toppings-update-form-button {
     outline: none;
     border: none;
