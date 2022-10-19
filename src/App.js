@@ -51,8 +51,12 @@ function App() {
   };
 
   const deleteTopping = id => {
-    const docRef = doc(db, "toppings", id);
-    deleteDoc(docRef);
+    if (isToppingUpdating && id === updatedTopping.id) {
+      setToppingWarning("You can't delete a topping you're currently updating!");
+    } else {
+      const docRef = doc(db, "toppings", id);
+      deleteDoc(docRef);
+    }
   };
 
   const handleUpdateTopping = (id, topping) => {
@@ -173,8 +177,12 @@ function App() {
   }
 
   const deletePizza = id => {
-    const docRef = doc(db, "pizzas", id);
-    deleteDoc(docRef);
+    if (isPizzaUpdating && id === updatedPizza.id) {
+      setPizzaWarning("You can't delete a pizza you're currently updating!");
+    } else {
+      const docRef = doc(db, "pizzas", id);
+      deleteDoc(docRef);
+    }
   };
 
   const handleUpdatePizza = (id, name, toppings) => {
@@ -213,7 +221,7 @@ function App() {
     const pizzaToppingsArr = updatedPizza.toppings;
     if (!enteredPizza) {
       setPizzaWarning("You must name your pizza!");
-    } 
+    }
     // else if (compare === true) {
     //   setPizzaWarning(`A pizza with the name ${enteredPizza} already exists!`);
     // } 
