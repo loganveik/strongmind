@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import Owner from './pages/Owner/Owner';
 import Chef from './pages/Chef/Chef';
 import Navbar from './components/Navbar/Navbar';
@@ -279,7 +279,8 @@ function App() {
         removeUpdatedSelectedTopping
       }}>
         <Routes>
-          <Route exact path="/" element={<Owner />} />
+          <Route exact path="/" element={<Navigate to="/owner" />} />
+          <Route path="/owner" element={<Owner />} />
           <Route path="/chef" element={<Chef />} />
         </Routes>
       </AppContext.Provider>
