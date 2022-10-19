@@ -54,7 +54,7 @@ const Owner = () => {
                             <div className="toppings-list-item" key={item.id}>
                                 <p className="toppings-list-item-name">{item.topping}</p>
                                 <div className="toppings-list-item-icons">
-                                    <i className="toppings-list-item-icon fa-solid fa-pen" onClick={() => handleUpdateTopping(item.id)}></i>
+                                    <i className="toppings-list-item-icon fa-solid fa-pen" onClick={() => handleUpdateTopping(item.id, item.topping)}></i>
                                     <i className="toppings-list-item-icon fa-solid fa-trash" onClick={() => deleteTopping(item.id)}></i>
                                 </div>
                             </div>

@@ -55,10 +55,10 @@ function App() {
     deleteDoc(docRef);
   };
 
-  const handleUpdateTopping = (id) => {
+  const handleUpdateTopping = (id, topping) => {
     setIsToppingUpdating(true);
     setUpdatedTopping({
-      ...updatedTopping,
+      topping: topping,
       id: id
     });
     setToppingWarning("");
@@ -177,10 +177,11 @@ function App() {
     deleteDoc(docRef);
   };
 
-  const handleUpdatePizza = (id) => {
+  const handleUpdatePizza = (id, name, toppings) => {
     setIsPizzaUpdating(true);
     setUpdatedPizza({
-      ...updatedPizza,
+      name: name,
+      toppings: toppings,
       id: id
     });
     setPizzaWarning("");
@@ -234,67 +235,6 @@ function App() {
         });
     }
   }
-
-  // // --PIZZAS--
-  // const getPizzasList = () => {
-  //   onSnapshot(pizzasCollectionRef, snapshot => {
-  //     setPizzasList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-  //   });
-  // };
-
-  // const handlePizzaSubmit = (e) => {
-  //   e.preventDefault();
-  //   const enteredPizza = pizza.name;
-  //   const pizzaListPizza = pizzasList.map(item => item.name.toLowerCase());
-  //   const compare = pizzaListPizza.includes(enteredPizza.toLowerCase());
-  //   const pizzaToppingsArr = pizza.toppings;
-  //   if (!enteredPizza) {
-  //     setPizzaWarning("You must name your pizza!");
-  //   } else if (compare === true) {
-  //     setPizzaWarning(`A pizza with the name ${enteredPizza} already exists!`);
-  //   } else if (pizzaToppingsArr.length === 0) {
-  //     setPizzaWarning("You must choose at least 1 topping for your pizza!");
-  //   } else {
-  //     addDoc(pizzasCollectionRef, pizza);
-  //     setPizza({
-  //       name: "",
-  //       toppings: []
-  //     });
-  //     setPizzaWarning("");
-  //   }
-  //   // todo: A pizza with these toppings already exists! (compare 2 arrays)
-  // }
-
-  // const handleTopping = (e) => {
-  //   const selectedToppingValue = e.target.dataset.topping;
-  //   const pizzaToppingsState = pizza.toppings;
-  //   const newToppingArr = [...pizzaToppingsState, selectedToppingValue];
-  //   const pizzaToppingsStateMap = pizzaToppingsState.map(item => item);
-  //   const compare = pizzaToppingsStateMap.filter(item => selectedToppingValue.includes(item));
-  //   if (compare.length > 0) {
-  //     return
-  //   } else {
-  //     setPizza({
-  //       ...pizza,
-  //       toppings: newToppingArr
-  //     });
-  //     setPizzaWarning("");
-  //   }
-  // }
-
-  // const removeSelectedTopping = (e) => {
-  //   const selectedToppingValue = e.target.dataset.topping;
-  //   const pizzaToppingsState = pizza.toppings;
-  //   const filteredItems = pizzaToppingsState.filter(item => item !== selectedToppingValue);
-  //   setPizza({
-  //     ...pizza,
-  //     toppings: filteredItems
-  //   });
-  // };
-
-  // const deletePizza = id => {
-  //   deleteDoc(doc(db, "pizzas", id));
-  // };
 
   return (
     <div className="container">

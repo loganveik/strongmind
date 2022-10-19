@@ -49,7 +49,6 @@ const Chef = () => {
                         updatedPizza={updatedPizza}
                         pizzaWarning={pizzaWarning}
                         Link={Link}
-                        // removeSelectedTopping={(e) => removeSelectedTopping(e)}
                         removeUpdatedSelectedTopping={(e) => removeUpdatedSelectedTopping(e)}
                     />
                     :
@@ -84,7 +83,7 @@ const Chef = () => {
                                     </div>
                                 </div>
                                 <div className="pizzas-list-item-icons">
-                                    <i className="pizzas-list-item-icon fa-solid fa-pen" onClick={() => handleUpdatePizza(item.id)}></i>
+                                    <i className="pizzas-list-item-icon fa-solid fa-pen" onClick={() => handleUpdatePizza(item.id, item.name, item.toppings)}></i>
                                     <i className="pizzas-list-item-icon fa-solid fa-trash" onClick={() => deletePizza(item.id)}></i>
                                 </div>
                             </div>
