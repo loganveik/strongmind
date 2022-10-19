@@ -11,14 +11,18 @@ export const AppContext = createContext();
 function App() {
   const [topping, setTopping] = useState({ topping: "" });
   const [toppingsList, setToppingsList] = useState([]);
+
   const [toppingWarning, setToppingWarning] = useState("");
+
   const [updatedTopping, setUpdatedTopping] = useState({ topping: "", id: "" });
   const [isToppingUpdating, setIsToppingUpdating] = useState(false);
-  const toppingsCollectionRef = collection(db, "toppings");
-  const q = query(toppingsCollectionRef, orderBy("createdAt"));
 
+  const toppingsCollectionRef = collection(db, "toppings");
+  const toppingQ = query(toppingsCollectionRef, orderBy("createdAt"));
+
+  // toppings
   const getToppingsList = () => {
-    onSnapshot(q, snapshot => {
+    onSnapshot(toppingQ, snapshot => {
       setToppingsList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
   };
@@ -86,14 +90,150 @@ function App() {
   };
 
   // Pizzas State (Chef Page)
-  // const [pizza, setPizza] = useState({
-  //   name: "",
-  //   toppings: [],
-  //   serverTimestamp: "" 
-  // });
-  // const [pizzasList, setPizzasList] = useState([]);
-  // const [pizzaWarning, setPizzaWarning] = useState("");
-  // const pizzasCollectionRef = collection(db, "pizzas");
+  const [pizza, setPizza] = useState({ name: "", toppings: [] });
+  const [pizzasList, setPizzasList] = useState([]);
+
+  const [pizzaWarning, setPizzaWarning] = useState("");
+
+  const [updatedPizza, setUpdatedPizza] = useState({ name: "", toppings: [], id: "" });
+  const [isPizzaUpdating, setIsPizzaUpdating] = useState(false);
+
+  const pizzasCollectionRef = collection(db, "pizzas");
+  const pizzaQ = query(pizzasCollectionRef, orderBy("createdAt"));
+
+  const getPizzasList = () => {
+    onSnapshot(pizzaQ, snapshot => {
+      setPizzasList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    });
+  };
+
+  const handleTopping = (e) => {
+    const selectedToppingValue = e.target.dataset.topping;
+    const pizzaToppingsArr = pizza.toppings;
+    const newToppingsArr = [...pizzaToppingsArr, selectedToppingValue];
+    const pizzaToppingsArrMap = pizzaToppingsArr.map(item => item);
+    const compare = pizzaToppingsArrMap.filter(item => selectedToppingValue.includes(item));
+    if (compare.length > 0) {
+      return
+    } else {
+      setPizza({
+        ...pizza,
+        toppings: newToppingsArr
+      });
+      setPizzaWarning("");
+    }
+  }
+
+  const removeSelectedTopping = (e) => {
+    const selectedToppingValue = e.target.dataset.topping;
+    const pizzaToppingsArr = pizza.toppings;
+    const filteredItems = pizzaToppingsArr.filter(item => item !== selectedToppingValue);
+    setPizza({
+      ...pizza,
+      toppings: filteredItems
+    });
+  };
+
+  const removeUpdatedSelectedTopping = (e) => {
+    const selectedToppingValue = e.target.dataset.topping;
+    const pizzaToppingsArr = updatedPizza.toppings;
+    const filteredItems = pizzaToppingsArr.filter(item => item !== selectedToppingValue);
+    setUpdatedPizza({
+      ...updatedPizza,
+      toppings: filteredItems
+    });
+  };
+
+  const handlePizzaSubmit = (e) => {
+    e.preventDefault();
+    const enteredPizza = pizza.name;
+    const pizzaListPizza = pizzasList.map(item => item.name.toLowerCase());
+    const compare = pizzaListPizza.includes(enteredPizza.toLowerCase());
+    const pizzaToppingsArr = pizza.toppings;
+    if (!enteredPizza) {
+      setPizzaWarning("You must name your pizza!");
+    } else if (compare === true) {
+      setPizzaWarning(`A pizza with the name ${enteredPizza} already exists!`);
+    } else if (pizzaToppingsArr.length === 0) {
+      setPizzaWarning("You must choose at least 1 topping for your pizza!");
+    } else {
+      addDoc(pizzasCollectionRef, {
+        name: enteredPizza,
+        toppings: pizzaToppingsArr,
+        createdAt: serverTimestamp()
+      })
+        .then(() => {
+          setPizza({
+            name: "",
+            toppings: []
+          });
+          setPizzaWarning("");
+        })
+    }
+  }
+
+  const deletePizza = id => {
+    const docRef = doc(db, "pizzas", id);
+    deleteDoc(docRef);
+  };
+
+  const handleUpdatePizza = (id) => {
+    setIsPizzaUpdating(true);
+    setUpdatedPizza({
+      ...updatedPizza,
+      id: id
+    });
+    setPizzaWarning("");
+  };
+
+  const handleUpdatedTopping = (e) => {
+    const selectedToppingValue = e.target.dataset.topping;
+    const pizzaToppingsArr = updatedPizza.toppings;
+    const newToppingsArr = [...pizzaToppingsArr, selectedToppingValue];
+    const pizzaToppingsArrMap = pizzaToppingsArr.map(item => item);
+    const compare = pizzaToppingsArrMap.filter(item => selectedToppingValue.includes(item));
+    if (compare.length > 0) {
+      return
+    } else {
+      setUpdatedPizza({
+        ...updatedPizza,
+        toppings: newToppingsArr
+      });
+      setPizzaWarning("");
+    }
+  }
+
+  const submitUpdatedPizza = (e) => {
+    const docRef = doc(db, "pizzas", updatedPizza.id);
+    e.preventDefault();
+    const enteredPizza = updatedPizza.name;
+    // const pizzaListPizza = pizzasList.map(item => item.name.toLowerCase());
+    // const compare = pizzaListPizza.includes(enteredPizza.toLowerCase());
+    const pizzaToppingsArr = updatedPizza.toppings;
+    if (!enteredPizza) {
+      setPizzaWarning("You must name your pizza!");
+    } 
+    // else if (compare === true) {
+    //   setPizzaWarning(`A pizza with the name ${enteredPizza} already exists!`);
+    // } 
+    else if (pizzaToppingsArr.length === 0) {
+      setPizzaWarning("You must choose at least 1 topping for your pizza!");
+    } else {
+      updateDoc(docRef, {
+        name: enteredPizza,
+        toppings: pizzaToppingsArr
+      })
+        .then(() => {
+          setUpdatedPizza({
+            name: "",
+            toppings: [],
+            id: ""
+          });
+          setIsPizzaUpdating(false);
+          setPizzaWarning("");
+        });
+    }
+  }
 
   // // --PIZZAS--
   // const getPizzasList = () => {
@@ -172,17 +312,23 @@ function App() {
         deleteTopping,
         handleUpdateTopping,
         submitUpdatedTopping,
-        // handlePizzaSubmit,
-        // getPizzasList,
-        // pizzasList,
-        // deletePizza,
-        // setPizza,
-        // pizza,
-        // handleTopping,
-        // setPizzaWarning,
-        // pizzaWarning,
-        // Link,
-        // removeSelectedTopping
+        pizza,
+        setPizza,
+        pizzasList,
+        pizzaWarning,
+        updatedPizza,
+        setUpdatedPizza,
+        isPizzaUpdating,
+        getPizzasList,
+        handlePizzaSubmit,
+        deletePizza,
+        handleUpdatePizza,
+        submitUpdatedPizza,
+        handleTopping,
+        Link,
+        removeSelectedTopping,
+        handleUpdatedTopping,
+        removeUpdatedSelectedTopping
       }}>
         <Routes>
           <Route exact path="/" element={<Owner />} />

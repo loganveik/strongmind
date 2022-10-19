@@ -2,6 +2,7 @@ import './Chef.css';
 import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../App';
 import PizzaAddForm from '../../components/PizzaAddForm/PizzaAddForm';
+import PizzaUpdateForm from '../../components/PizzaUpdateForm/PizzaUpdateForm';
 
 const Chef = () => {
 
@@ -19,7 +20,14 @@ const Chef = () => {
         getToppingsList,
         handleTopping,
         Link,
-        removeSelectedTopping
+        removeSelectedTopping,
+        handleUpdatePizza,
+        isPizzaUpdating,
+        setUpdatedPizza,
+        updatedPizza,
+        submitUpdatedPizza,
+        handleUpdatedTopping,
+        removeUpdatedSelectedTopping
     } = useContext(AppContext);
 
     useEffect(() => {
@@ -29,17 +37,34 @@ const Chef = () => {
 
     return (
         <div className="pizzas-card">
-            <PizzaAddForm
-                onChange={(e) => { setPizza({ ...pizza, name: e.target.value }) }}
-                value={pizza.name}
-                toppingsList={toppingsList}
-                handleTopping={(e) => handleTopping(e)}
-                handlePizzaSubmit={handlePizzaSubmit}
-                pizza={pizza}
-                pizzaWarning={pizzaWarning}
-                Link={Link}
-                removeSelectedTopping={(e) => removeSelectedTopping(e)}
-            />
+            {
+                isPizzaUpdating
+                    ?
+                    <PizzaUpdateForm
+                        onChange={(e) => { setUpdatedPizza({ ...updatedPizza, name: e.target.value }) }}
+                        value={updatedPizza.name}
+                        toppingsList={toppingsList}
+                        handleUpdatedTopping={(e) => handleUpdatedTopping(e)}
+                        handlePizzaSubmit={submitUpdatedPizza}
+                        updatedPizza={updatedPizza}
+                        pizzaWarning={pizzaWarning}
+                        Link={Link}
+                        // removeSelectedTopping={(e) => removeSelectedTopping(e)}
+                        removeUpdatedSelectedTopping={(e) => removeUpdatedSelectedTopping(e)}
+                    />
+                    :
+                    <PizzaAddForm
+                        onChange={(e) => { setPizza({ ...pizza, name: e.target.value }) }}
+                        value={pizza.name}
+                        toppingsList={toppingsList}
+                        handleTopping={(e) => handleTopping(e)}
+                        handlePizzaSubmit={handlePizzaSubmit}
+                        pizza={pizza}
+                        pizzaWarning={pizzaWarning}
+                        Link={Link}
+                        removeSelectedTopping={(e) => removeSelectedTopping(e)}
+                    />
+            }
             <div className="pizzas-list">
                 {
                     pizzasList.length === 0
@@ -59,7 +84,7 @@ const Chef = () => {
                                     </div>
                                 </div>
                                 <div className="pizzas-list-item-icons">
-                                    <i className="pizzas-list-item-icon fa-solid fa-pen"></i>
+                                    <i className="pizzas-list-item-icon fa-solid fa-pen" onClick={() => handleUpdatePizza(item.id)}></i>
                                     <i className="pizzas-list-item-icon fa-solid fa-trash" onClick={() => deletePizza(item.id)}></i>
                                 </div>
                             </div>
