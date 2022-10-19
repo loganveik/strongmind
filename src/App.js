@@ -216,15 +216,10 @@ function App() {
     const docRef = doc(db, "pizzas", updatedPizza.id);
     e.preventDefault();
     const enteredPizza = updatedPizza.name;
-    // const pizzaListPizza = pizzasList.map(item => item.name.toLowerCase());
-    // const compare = pizzaListPizza.includes(enteredPizza.toLowerCase());
     const pizzaToppingsArr = updatedPizza.toppings;
     if (!enteredPizza) {
       setPizzaWarning("You must name your pizza!");
     }
-    // else if (compare === true) {
-    //   setPizzaWarning(`A pizza with the name ${enteredPizza} already exists!`);
-    // } 
     else if (pizzaToppingsArr.length === 0) {
       setPizzaWarning("You must choose at least 1 topping for your pizza!");
     } else {

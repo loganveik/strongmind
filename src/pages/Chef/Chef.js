@@ -76,8 +76,9 @@ const Chef = () => {
                                     <p className="pizzas-list-item-name">{item.name}</p>
                                     <div className="pizzas-list-item-toppings">
                                         {
-                                            item.toppings.map((topping, index) => (
-                                                <p key={index} className="pizzas-list-item-topping">{index > 0 && ', '}{topping}</p>
+                                            item.toppings.map((topping, index, arr) => (
+                                                // <p key={index} className="pizzas-list-item-topping">{index > 0 && ', '}{topping}</p>
+                                                <p key={index} className="pizzas-list-item-topping">{topping}{index + 1 === arr.length? '' : ', '}</p>
                                             ))
                                         }
                                     </div>

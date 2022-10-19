@@ -21,7 +21,7 @@ const PizzaAddForm = ({ onChange, value, toppingsList, handleTopping, handlePizz
                             {
                                 toppingsList.length === 0
                                     ?
-                                    <Link className="topping-dropdown-item-warning" to={"/"}>No toppings yet, add some!</Link>
+                                    <Link className="topping-dropdown-item-warning" to={"/owner"}>No toppings yet, add some!</Link>
                                     :
                                     toppingsList.map(item => (
                                         <li

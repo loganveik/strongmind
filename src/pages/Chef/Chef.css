@@ -35,7 +35,9 @@
     border-radius: 0.25rem;
 }
 
-/* .pizzas-list-item-info {} */
+.pizzas-list-item-info {
+    max-width: 80%;
+}
 
 .pizzas-list-item-name {
     font-family: 'Poppins', sans-serif;
@@ -46,6 +48,8 @@
 
 .pizzas-list-item-toppings {
     display: flex;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .pizzas-list-item-topping {
@@ -53,13 +57,8 @@
     font-size: 1rem;
     font-weight: 300;
     color: #edf2f4;
-    /* margin-left: 0.25rem; */
     font-style: italic;
 }
-
-/* .pizzas-list-item-topping::before {
-    content: '/&nbsp;';
-} */
 
 .pizzas-list-item-icons {
     display: flex;
